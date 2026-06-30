@@ -29,3 +29,19 @@ func (a *App) Greet(name string) string {
 func (a *App) IsConnected() bool {
 	return false
 }
+
+func (a *App) Connect() error {
+	return nil
+}
+
+func (a *App) Disonnect() error {
+	return nil
+}
+
+func (a *App) JoinLobby() error {
+	return nil
+}
+
+func (a *App) LeaveLobby() error {
+	return nil
+}

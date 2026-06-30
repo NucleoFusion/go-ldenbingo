@@ -2,6 +2,14 @@
 @plugin '@tailwindcss/forms';
 @plugin '@tailwindcss/typography';
 
+:root {
+  --bg: #1e1e2e;
+  --text: #cdd6f4;
+  --accent: #b4befe;
+  --accent-hover: rgb(180 190 254 / 0.1);
+}
+
 html {
-  background-color: white;
+  background-color: var(--bg);
+  color: var(--text);
 }

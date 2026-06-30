@@ -357,15 +357,27 @@ func (p *Packet) UnmarshalMsgpack(b []byte) error {
 		if err != nil {
 			return err
 		}
+
 		t, ok := typeRegistry[typeName]
 		if !ok {
 			return fmt.Errorf("unregistered incoming type name: %s", typeName)
 		}
+
 		valPtr := reflect.New(t).Interface()
-		if err := dec.Decode(valPtr); err != nil {
+
+		raw, err := dec.DecodeRaw()
+		if err != nil {
+			return fmt.Errorf("failed to read raw object of type %s: %w", typeName, err)
+		}
+
+		data, err := Decompress(raw)
+		if err != nil {
+			return fmt.Errorf("failed to decompress object of type %s: %w", typeName, err)
+		}
+
+		if err := msgpack.Unmarshal(data, valPtr); err != nil {
 			return fmt.Errorf("failed to decode object of type %s: %w", typeName, err)
 		}
-		p.Objects = append(p.Objects, reflect.ValueOf(valPtr).Elem().Interface())
 	}
 	return nil
 }

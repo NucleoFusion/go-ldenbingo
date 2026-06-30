@@ -94,7 +94,7 @@ func (c *NetoClient) Connect() error {
 	c.logStatus("Sending registration handshake...")
 	regPayload := ClientRegisterPayload{
 		Message:       "hello",
-		Version:       "1",
+		Version:       "0.17.0",
 		IdentityToken: c.identityToken,
 	}
 
@@ -255,8 +255,6 @@ func (c *NetoClient) readLoop() {
 				return
 			}
 
-			fmt.Printf("[RAW PAYLOAD] len=%d hex=%x\n", len(payload), payload)
-
 			decompressed, err := Decompress(payload)
 			if err != nil {
 				c.logError(fmt.Errorf("failed to decompress payload: %w", err))
@@ -269,6 +267,17 @@ func (c *NetoClient) readLoop() {
 				c.logError(fmt.Errorf("failed to unmarshal packet: %w", err))
 				continue
 			}
+
+			// fmt.Printf("[RECV] %s (%d object%s)\n",
+			// 	packet.Type,
+			// 	len(packet.Objects),
+			// 	map[bool]string{true: "", false: "s"}[len(packet.Objects) == 1],
+			// )
+			//
+			// for i, obj := range packet.Objects {
+			// 	fmt.Printf("  [%d] %T\n", i, obj)
+			// 	fmt.Printf("      %+v\n", obj)
+			// }
 
 			switch packet.Type {
 			case ServerRegisterAccepted:
