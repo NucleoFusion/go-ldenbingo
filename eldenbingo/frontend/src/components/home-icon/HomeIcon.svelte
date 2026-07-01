@@ -3,10 +3,12 @@
 </script>
 
 <div
-  class="rounded border-[var(--accent)] bg-transparent hover:bg-[var(--accent-hover)] hover:cursor-pointer px-[1.5vw] py-[1vh]"
+  class="rounded border-[var(--accent)] bg-transparent hover:bg-black/20 hover:cursor-pointer"
 >
-  <img class="w-[3vw]" src={srcImg} {alt} />
-  <h4>
+  <div class="grid items-center justify-center">
+    <img class="h-[50px]" src={srcImg} {alt} />
+  </div>
+  <h4 class="text-sm pt-1">
     {title}
   </h4>
 </div>
